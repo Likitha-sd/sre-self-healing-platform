@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: dependency-deployment
+
+spec:
+  replicas: 1
+
+  selector:
+    matchLabels:
+      app: dependency
+
+  template:
+    metadata:
+      labels:
+        app: dependency
+
+    spec:
+      containers:
+        - name: dependency
+          image: sre-dependency:1.0
+          imagePullPolicy: Never
+
+          ports:
+            - containerPort: 8001

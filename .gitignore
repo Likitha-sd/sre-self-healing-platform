@@ -1,0 +1,16 @@
+.venv/
+.pytest_cache/
+__pycache__/
+*.pyc
+*.db
+
+terraform/.terraform/
+terraform/*.tfstate
+terraform/*.tfstate.*
+terraform/*.tfvars
+terraform/*.tfvars.json
+terraform/crash.log
+terraform/crash.*.log
+
+.env
+*.log
