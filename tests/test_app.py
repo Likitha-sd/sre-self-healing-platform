@@ -26,17 +26,21 @@ def test_create_item():
 
 def test_list_items():
     response = client.get("/api/v1/items")
-
     assert response.status_code == 200
+
     data = response.json()
 
     assert "items" in data
     assert "dependency" in data
     assert "dependency_error" in data
     assert isinstance(data["items"], list)
-    assert data["dependency"]["message"] == "Dependency is working"
-    assert data["dependency_error"] is None
 
+    # The dependency may be unavailable in CI,
+    # but the main API should remain available.
+    if data["dependency"] is not None:
+        assert data["dependency"]["message"] == "Dependency is working"
+    else:
+        assert data["dependency_error"] in {"unavailable", "circuit_open"}
 
 def test_get_missing_item():
     response = client.get("/api/v1/items/999999")
